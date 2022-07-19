@@ -30,9 +30,11 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         if (usersRepo.existsById(username) && usersRepo.findById(username).get().getPassword().equals(password)) {
+            System.out.println("good");
             Collection<? extends GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
             return new UsernamePasswordAuthenticationToken(username, password, authorities);
         }
+        System.out.println("bad");
         throw new BadCredentialsException("User is invalid");
     }
 
